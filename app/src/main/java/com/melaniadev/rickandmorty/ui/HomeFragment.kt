@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.melaniadev.rickandmorty.databinding.HomeFragmentBinding
 import com.melaniadev.rickandmorty.domain.model.CharacterModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,8 +19,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: HomeFragmentBinding
     private val homeViewModel: HomeViewModel by viewModels()
-    private var characterList = listOf<CharacterModel>()
-   // private lateinit var charactersAdapter: CharactersAdapter
+    private lateinit var charactersAdapter: CharactersAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,13 +45,15 @@ class HomeFragment : Fragment() {
     private fun handleState(state: HomeViewModel.State) {
         when (state) {
             is HomeViewModel.State.CharacterListRecived -> {
-                    printCharacterList(state.characterList)
+                instantiateCharactersAdapter(state.characterList)
             }
         }
     }
 
-    private fun printCharacterList(listRecived : List<CharacterModel>) {
-        characterList = listRecived
-        //charactersAdapter.setCharacterList(characterList)
+    private fun instantiateCharactersAdapter(characterList: List<CharacterModel>){
+        charactersAdapter = CharactersAdapter(characterList)
+        binding.recyclerCharacters.setHasFixedSize(true)
+        binding.recyclerCharacters.layoutManager = LinearLayoutManager(this.context)
+        binding.recyclerCharacters.adapter = charactersAdapter
     }
 }
