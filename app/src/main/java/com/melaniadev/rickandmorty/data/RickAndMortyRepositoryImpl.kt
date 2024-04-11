@@ -1,64 +1,32 @@
 package com.melaniadev.rickandmorty.data
 
+import com.melaniadev.rickandmorty.data.common.RetrofitUtils
 import com.melaniadev.rickandmorty.domain.model.CharacterModel
-import com.melaniadev.rickandmorty.domain.model.Gender
-import com.melaniadev.rickandmorty.domain.model.Status
+import com.melaniadev.rickandmorty.domain.model.mapper.CharacterModelMapper
 import com.melaniadev.rickandmorty.domain.repository.RickAndMortyRepository
 
 class RickAndMortyRepositoryImpl : RickAndMortyRepository {
-    override fun getCharacterList(): List<CharacterModel> {
-        return mockkData()
-    }
+    var numberOfPage: Int = 1
+    override suspend fun getCharacterList(): List<CharacterModel> {
 
-    fun mockkData(): List<CharacterModel> {
-        val episodes: List<String> = listOf("episodiouno", "episodiodos", "episodiotres")
-        val charactersMockkedList = listOf(
-            CharacterModel(
-                1,
-                "Morty",
-                Status.ALIVE,
-                "Humano",
-                "",
-                Gender.MALE,
-                "Tierra",
-                "Rubi",
-                "img",
-                episodes
-            ), CharacterModel(
-                2,
-                "Meeseeks",
-                Status.DEAD,
-                "Marciano",
-                "",
-                Gender.FEMALE,
-                "Mart",
-                "ozzy",
-                "img",
-                episodes
-            ), CharacterModel(
-                3,
-                "Rick",
-                Status.UNKNOWN,
-                "FlatEarth",
-                "",
-                Gender.UNKNOWN,
-                "PlaneEarth",
-                "gusano",
-                "img",
-                episodes
-            ), CharacterModel(
-                4,
-                "PickleRick",
-                Status.UNKNOWN,
-                "Cucumber",
-                "",
-                Gender.GENDERLESS,
-                "Cucumberland",
-                "Pickle Jar",
-                "img",
-                episodes
-            )
-        )
-        return charactersMockkedList
+        try {
+            val callResponse = RetrofitUtils.getRetrofitUtils().getCharacterDtoList(numberOfPage).execute()
+
+            if (callResponse.isSuccessful) {
+                val apiResponseDto = callResponse.body()
+
+                if (apiResponseDto != null) {
+                    numberOfPage = numberOfPage + 1
+                    return CharacterModelMapper.toModel(apiResponseDto)
+                } else {
+                    throw Exception("Null response from server")
+                }
+            } else {
+                throw Exception("Error Api request: ${callResponse.code()}")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw Exception("Error to get character List", e)
+        }
     }
 }

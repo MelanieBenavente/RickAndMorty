@@ -23,12 +23,16 @@ class HomeViewModel @Inject constructor(
 
     fun requestCharactersFromModel() {
         viewModelScope.launch {
-            getCharactersUseCase().onStart { }.catch { }
+            getCharactersUseCase()
+                .onStart { _state.emit(State.Loading) }
+                .catch { _state.emit(State.ScreenError) }
                 .collect { _state.emit(State.CharacterListRecived(it)) }
         }
     }
 
     sealed class State {
+        object Loading : State()
+        object ScreenError : State()
         data class CharacterListRecived(
             val characterList: List<CharacterModel>) : State()
     }
