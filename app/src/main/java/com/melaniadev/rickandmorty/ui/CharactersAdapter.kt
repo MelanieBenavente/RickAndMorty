@@ -10,9 +10,10 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.melaniadev.rickandmorty.R
 import com.melaniadev.rickandmorty.databinding.SingleItemViewBinding
+import com.melaniadev.rickandmorty.domain.model.CharacterInfoWrapper
 import com.melaniadev.rickandmorty.domain.model.CharacterModel
 
-class CharactersAdapter(private val characterList: List<CharacterModel>): RecyclerView.Adapter<CharactersAdapter.CharacterHolder>() {
+class CharactersAdapter(private val characterInfoWrapper: CharacterInfoWrapper): RecyclerView.Adapter<CharactersAdapter.CharacterHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int): CharacterHolder {
         val binding = SingleItemViewBinding
@@ -22,11 +23,11 @@ class CharactersAdapter(private val characterList: List<CharacterModel>): Recycl
 
 
     override fun onBindViewHolder(holder: CharacterHolder, position: Int) {
-        holder.printHolder(characterList.get(position))
+        holder.printHolder(characterInfoWrapper.characterList.get(position))
     }
 
     override fun getItemCount():
-            Int = characterList.size
+            Int = characterInfoWrapper.characterList.size
 
     class CharacterHolder(val binding: SingleItemViewBinding) : ViewHolder(binding.root){
 

@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.melaniadev.rickandmorty.databinding.HomeFragmentBinding
+import com.melaniadev.rickandmorty.domain.model.CharacterInfoWrapper
 import com.melaniadev.rickandmorty.domain.model.CharacterModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -45,8 +46,8 @@ class HomeFragment : Fragment() {
 
     private fun handleState(state: HomeViewModel.State) {
         when (state) {
-            is HomeViewModel.State.CharacterListRecived -> {
-                instantiateCharactersAdapter(state.characterList)
+            is HomeViewModel.State.CharacterInfoRecived -> {
+                instantiateCharactersAdapter(state.characterInfoWrapper)
             }
             HomeViewModel.State.ScreenError -> {
                 Toast.makeText(requireContext(), "ERROR", Toast.LENGTH_SHORT).show()
@@ -58,7 +59,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun instantiateCharactersAdapter(characterList: List<CharacterModel>){
+    private fun instantiateCharactersAdapter(characterList: CharacterInfoWrapper){
         charactersAdapter = CharactersAdapter(characterList)
         binding.recyclerCharacters.setHasFixedSize(true)
         binding.recyclerCharacters.layoutManager = LinearLayoutManager(this.context)

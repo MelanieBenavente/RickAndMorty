@@ -2,6 +2,8 @@ package com.melaniadev.rickandmorty.domain.model.mapper
 
 import com.melaniadev.rickandmorty.data.dto.ApiResponseDto
 import com.melaniadev.rickandmorty.data.dto.CharacterDto
+import com.melaniadev.rickandmorty.data.dto.InfoDto
+import com.melaniadev.rickandmorty.domain.model.CharacterInfoWrapper
 import com.melaniadev.rickandmorty.domain.model.CharacterModel
 import com.melaniadev.rickandmorty.domain.model.Gender
 import com.melaniadev.rickandmorty.domain.model.Status
@@ -9,8 +11,11 @@ import com.melaniadev.rickandmorty.domain.model.Status
 class CharacterModelMapper {
 
     companion object {
-        fun toModel(apiResponseDto: ApiResponseDto): List<CharacterModel> {
+        fun toModel(apiResponseDto: ApiResponseDto): CharacterInfoWrapper {
             val characterModelList: MutableList<CharacterModel> = mutableListOf()
+            val info : InfoDto = apiResponseDto.info
+            val nextPage = info.nextPage
+            val haveMorePage: Boolean = nextPage?.isNotEmpty() ?: false
             for (characterDto: CharacterDto in apiResponseDto.characterList) {
                 val statusEnum = getStatusEnum(characterDto.status)
                 val genderEnum = getGenderEnum(characterDto.gender)
@@ -27,8 +32,9 @@ class CharacterModelMapper {
                     episodes = listOf()
                 )
                 characterModelList.add(characterModel)
+
             }
-            return characterModelList
+            return CharacterInfoWrapper(characterModelList, haveMorePage)
         }
 
         private fun getStatusEnum(status: String?): Status {

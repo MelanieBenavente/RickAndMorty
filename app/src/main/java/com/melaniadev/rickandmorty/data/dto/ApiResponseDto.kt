@@ -9,7 +9,8 @@ data class ApiResponseDto(
 
 data class InfoDto(
     @SerializedName("pages") var pages: Int?,
-    @SerializedName("next") var nextPage: String?) : Serializable
+    @SerializedName("next") var nextPage: String?) : Serializable {
+}
 
 data class CharacterDto(
     @SerializedName("id") var id: Int,
