@@ -57,6 +57,9 @@ dependencies {
     implementation libs.fragment
     implementation libs.viewModel.lifecycle
 
+    //lottie
+    implementation 'com.airbnb.android:lottie:4.2.0'
+
     //Server calls
     implementation('com.squareup.retrofit2:retrofit:2.3.0')
             {
