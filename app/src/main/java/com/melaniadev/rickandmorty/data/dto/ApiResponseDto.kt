@@ -1,37 +1,34 @@
 package com.melaniadev.rickandmorty.data.dto
+
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class ApiResponseDto(
     @SerializedName("info") val info: InfoDto,
-    @SerializedName("results") val characterList: List<CharacterDto>
-) : Serializable
+    @SerializedName("results") val characterList: List<CharacterDto>) : Serializable
 
 data class InfoDto(
-    @SerializedName("pages") var pages: Int?,
-    @SerializedName("next") var nextPage: String?) : Serializable {
-}
+    @SerializedName("pages") val pages: Int?, @SerializedName("next") val nextPage: String?) :
+    Serializable {}
 
 data class CharacterDto(
-    @SerializedName("id") var id: Int,
-    @SerializedName("name") var name: String,
-    @SerializedName("status") var status: String?,
-    @SerializedName("species") var species: String,
-    @SerializedName("type") var type: String? = null,
-    @SerializedName("gender") var gender: String?,
-    @SerializedName("origin") var origin: OriginDto,
-    @SerializedName("location") var location: LocationDto,
-    @SerializedName("image") var image: String,
-    @SerializedName("episode") var episodes: List<String>,
-    @SerializedName("url") var url: String? = null,
-    @SerializedName("created") var created: String? = null) : Serializable
+    @SerializedName("id") val id: Int,
+    @SerializedName("name") val name: String,
+    @SerializedName("status") val status: String?,
+    @SerializedName("species") val species: String,
+    @SerializedName("type") val type: String? = null,
+    @SerializedName("gender") val gender: String?,
+    @SerializedName("origin") val origin: OriginDto,
+    @SerializedName("location") val location: LocationDto,
+    @SerializedName("image") val image: String,
+    @SerializedName("episode") val episodes: List<String>,
+    @SerializedName("url") val url: String? = null,
+    @SerializedName("created") val created: String? = null) : Serializable
 
 data class OriginDto(
-    @SerializedName("name") var originName: String,
-    @SerializedName("url") var originLocationUrl: String?
-) : Serializable
+    @SerializedName("name") val originName: String,
+    @SerializedName("url") val originLocationUrl: String?) : Serializable
 
 data class LocationDto(
-    @SerializedName("name") var locationName: String,
-    @SerializedName("url") var locationUrl: String?
-) : Serializable
+    @SerializedName("name") val locationName: String,
+    @SerializedName("url") val locationUrl: String?) : Serializable
