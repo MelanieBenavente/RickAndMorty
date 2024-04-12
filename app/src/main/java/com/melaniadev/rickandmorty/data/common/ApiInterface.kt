@@ -1,7 +1,6 @@
 package com.melaniadev.rickandmorty.data.common
 
 import com.melaniadev.rickandmorty.data.dto.ApiResponseDto
-import com.melaniadev.rickandmorty.data.dto.CharacterDto
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
