@@ -10,11 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.melaniadev.rickandmorty.databinding.HomeFragmentBinding
-import com.melaniadev.rickandmorty.domain.model.CharacterInfoWrapper
-import com.melaniadev.rickandmorty.domain.model.CharacterModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -36,8 +35,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        instantiateCharactersAdapter()
         attachObservers()
         homeViewModel.requestCharactersFromModel()
+
     }
 
     private fun attachObservers() {
@@ -47,20 +48,22 @@ class HomeFragment : Fragment() {
     private fun handleState(state: HomeViewModel.State) {
         when (state) {
             is HomeViewModel.State.CharacterInfoRecived -> {
-                instantiateCharactersAdapter(state.characterInfoWrapper)
+                charactersAdapter.characterInfoWrapper = state.characterInfoWrapper
+                charactersAdapter.isLoading = false
+                charactersAdapter.notifyDataSetChanged()
             }
             HomeViewModel.State.ScreenError -> {
                 Toast.makeText(requireContext(), "ERROR", Toast.LENGTH_SHORT).show()
             }
             HomeViewModel.State.Loading -> {
-                Toast.makeText(requireContext(), "LOADING", Toast.LENGTH_LONG).show()
-
+                charactersAdapter.isLoading = true
+                charactersAdapter.notifyDataSetChanged()
             }
         }
     }
 
-    private fun instantiateCharactersAdapter(characterList: CharacterInfoWrapper){
-        charactersAdapter = CharactersAdapter(characterList)
+    private fun instantiateCharactersAdapter(){
+        charactersAdapter = CharactersAdapter { homeViewModel.requestCharactersFromModel() }
         binding.recyclerCharacters.setHasFixedSize(true)
         binding.recyclerCharacters.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerCharacters.adapter = charactersAdapter
