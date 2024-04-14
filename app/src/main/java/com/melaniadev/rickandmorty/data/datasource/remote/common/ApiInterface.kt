@@ -1,6 +1,6 @@
-package com.melaniadev.rickandmorty.data.common
+package com.melaniadev.rickandmorty.data.datasource.remote.common
 
-import com.melaniadev.rickandmorty.data.dto.ApiResponseDto
+import com.melaniadev.rickandmorty.data.datasource.remote.dto.ApiResponseDto
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

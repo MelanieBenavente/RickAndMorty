@@ -1,36 +1,28 @@
 package com.melaniadev.rickandmorty.data
 
-import com.melaniadev.rickandmorty.data.common.RetrofitUtils
+import com.melaniadev.rickandmorty.data.datasource.local.LocalDataSource
+import com.melaniadev.rickandmorty.data.datasource.remote.RemoteDataSource
+import com.melaniadev.rickandmorty.data.datasource.remote.common.RetrofitUtils
 import com.melaniadev.rickandmorty.domain.model.CharacterInfoWrapper
 import com.melaniadev.rickandmorty.domain.model.CharacterModel
 import com.melaniadev.rickandmorty.domain.model.mapper.CharacterModelMapper
 import com.melaniadev.rickandmorty.domain.repository.RickAndMortyRepository
 
 class RickAndMortyRepositoryImpl : RickAndMortyRepository {
-    var numberOfPage: Int = 1
-    val characterListCache : MutableList<CharacterModel> = mutableListOf()
+    val localDataSource = LocalDataSource()
+    val remoteDataSource = RemoteDataSource()
+
     override suspend fun getCharacterList(): CharacterInfoWrapper {
-
         try {
-            val callResponse = RetrofitUtils.getRetrofitUtils().getCharacterDtoList(numberOfPage).execute()
+            val apiResponseDto = remoteDataSource.getCharacterListFromRemote()
+            val infoWrapperMapped = CharacterModelMapper.toModel(apiResponseDto)
 
-            if (callResponse.isSuccessful) {
-                val apiResponseDto = callResponse.body()
+            localDataSource.insertAllData(infoWrapperMapped.characterList)
+            return infoWrapperMapped.copy(characterList = localDataSource.getCharacterList())
 
-                if (apiResponseDto != null) {
-                    numberOfPage = numberOfPage + 1
-                    val infoWrapperMapped = CharacterModelMapper.toModel(apiResponseDto)
-                    characterListCache.addAll(infoWrapperMapped.characterList)
-                    return infoWrapperMapped.copy(characterList = characterListCache)
-                } else {
-                    throw Exception("Null response from server")
-                }
-            } else {
-                throw Exception("Error Api request: ${callResponse.code()}")
-            }
         } catch (e: Exception) {
             e.printStackTrace()
-            throw Exception("Error to get character List", e)
+            throw e
         }
     }
 }

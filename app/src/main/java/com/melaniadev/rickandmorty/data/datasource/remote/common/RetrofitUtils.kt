@@ -1,4 +1,4 @@
-package com.melaniadev.rickandmorty.data.common
+package com.melaniadev.rickandmorty.data.datasource.remote.common
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

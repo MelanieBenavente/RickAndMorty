@@ -1,4 +1,4 @@
-package com.melaniadev.rickandmorty.data.dto
+package com.melaniadev.rickandmorty.data.datasource.remote.dto
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
