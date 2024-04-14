@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Rick and Morty</string>
+    <string name="something_was_wrong">Something was wrong!</string>
+    <string name="back">Back</string>
+    <string name="character_name">Character Name</string>
+    <string name="character_gender">Gender</string>
+    <string name="character_specie">Specie</string>
+    <string name="character_origin">Origin</string>
+    <string name="last_location_txt">Last location:</string>
+    <string name="character_location">Character location</string>
+    <string name="next_page">Next page</string>
+    <string name="character_status">status</string>
 </resources>
