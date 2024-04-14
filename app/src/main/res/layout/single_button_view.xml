@@ -19,7 +19,7 @@
         android:textStyle="bold"
         android:textSize="30sp"
         android:visibility="visible"
-        android:textColor="#9C27B0"/>
+        android:textColor="@color/parent_background"/>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_loading"

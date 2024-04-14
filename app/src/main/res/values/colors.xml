@@ -2,4 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="green_alive">#4CAF50</color>
+    <color name="red_dead">#B60303</color>
+    <color name="character_name">#FFC107</color>
+    <color name="parent_background">#9C27B0</color>
+    <color name="parent_card_background">#83C538</color>
+
+
+
+
 </resources>

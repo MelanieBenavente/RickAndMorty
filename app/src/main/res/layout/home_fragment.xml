@@ -6,7 +6,7 @@
     android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9C27B0"
+    android:background="@color/parent_background"
     >
     <ImageView
         android:id="@+id/rick_and_morty_title"
@@ -38,6 +38,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/space"
         tools:listitem="@layout/single_item_view" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,7 @@ import com.melaniadev.rickandmorty.domain.model.CharacterModel
 import com.melaniadev.rickandmorty.domain.model.Gender
 import com.melaniadev.rickandmorty.domain.model.Status
 
-class CharactersAdapter(private val requestMoreCharacters: () -> Unit) :
+class CharactersAdapter(private val requestMoreCharacters: () -> Unit, private val navigateToDetail: (CharacterModel) -> Unit) :
     RecyclerView.Adapter<CharactersAdapter.CharacterHolder>() {
 
     val SINGLE_TYPE = 1
@@ -40,7 +40,9 @@ class CharactersAdapter(private val requestMoreCharacters: () -> Unit) :
 
     override fun onBindViewHolder(holder: CharacterHolder, position: Int) {
         if (getItemViewType(position) == SINGLE_TYPE) {
-            characterInfoWrapper!!.characterList.let { holder.printHolder(it.get(position)) }
+            characterInfoWrapper!!.characterList.let {
+                holder.printHolder(it.get(position), {character: CharacterModel -> navigateToDetail(character)})
+            }
         } else {
             characterInfoWrapper?.characterList.let {
                 if (characterInfoWrapper?.haveMorePages == true && !isLoading) {
@@ -73,6 +75,7 @@ class CharactersAdapter(private val requestMoreCharacters: () -> Unit) :
 
         fun showLoading() {
             binding as SingleButtonViewBinding
+            //todo!!! binding apply in all bindings
             binding.lottieLoading.visibility = View.VISIBLE
             binding.showMoreBtn.visibility = View.INVISIBLE
         }
@@ -86,8 +89,11 @@ class CharactersAdapter(private val requestMoreCharacters: () -> Unit) :
             }
         }
 
-        fun printHolder(character: CharacterModel) {
+        fun printHolder(character: CharacterModel, navigateToDetail: (CharacterModel) -> Unit) {
             binding as SingleItemViewBinding
+            binding.singleItemViewContainer.setOnClickListener {
+                navigateToDetail(character)
+            }
             binding.characterNameTxt.text = character.name
             binding.statusTxt.text = character.status.toString()
             binding.genderTxt.text = character.gender.toString()
