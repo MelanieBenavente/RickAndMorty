@@ -7,10 +7,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetCharactersUseCase @Inject constructor(val rickAndMortyRepository: RickAndMortyRepository) : UseCase<Unit, CharacterInfoWrapper>() {
+class GetCharactersUseCase @Inject constructor(private val rickAndMortyRepository: RickAndMortyRepository) : UseCase<Unit, CharacterInfoWrapper>() {
     override fun run(params: Unit): Flow<CharacterInfoWrapper> = flow {
         val characters = rickAndMortyRepository.getCharacterList()
         emit(characters)
     }
-
 }

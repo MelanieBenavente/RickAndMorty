@@ -20,7 +20,7 @@ class BlockErrorFragment : Fragment() {
         binding = BlockErrorFragmentBinding.inflate(layoutInflater)
         val mView = binding.root
         super.onCreateView(inflater, container, savedInstanceState)
-        binding.backErrorScreenBtn.setOnClickListener { view1 -> requireActivity().onBackPressed() }
+        binding.backErrorScreenBtn.setOnClickListener { sView -> requireActivity().onBackPressed() }
         return mView
     }
 }

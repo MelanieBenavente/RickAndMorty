@@ -57,7 +57,6 @@ class HomeFragment : Fragment() {
             HomeViewModel.State.ScreenError -> {
                 charactersAdapter?.isLoading = false
                 showBlockError()
-
             }
             HomeViewModel.State.Loading -> {
                 charactersAdapter?.isLoading = true

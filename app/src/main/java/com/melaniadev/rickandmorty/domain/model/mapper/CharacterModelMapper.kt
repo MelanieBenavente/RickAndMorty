@@ -1,8 +1,8 @@
 package com.melaniadev.rickandmorty.domain.model.mapper
 
-import com.melaniadev.rickandmorty.data.dto.ApiResponseDto
-import com.melaniadev.rickandmorty.data.dto.CharacterDto
-import com.melaniadev.rickandmorty.data.dto.InfoDto
+import com.melaniadev.rickandmorty.data.datasource.remote.dto.ApiResponseDto
+import com.melaniadev.rickandmorty.data.datasource.remote.dto.CharacterDto
+import com.melaniadev.rickandmorty.data.datasource.remote.dto.InfoDto
 import com.melaniadev.rickandmorty.domain.model.CharacterInfoWrapper
 import com.melaniadev.rickandmorty.domain.model.CharacterModel
 import com.melaniadev.rickandmorty.domain.model.Gender
@@ -32,7 +32,6 @@ class CharacterModelMapper {
                     episodes = listOf()
                 )
                 characterModelList.add(characterModel)
-
             }
             return CharacterInfoWrapper(characterModelList, haveMorePage)
         }

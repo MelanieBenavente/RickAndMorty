@@ -1,9 +1,5 @@
 package com.melaniadev.rickandmorty.ui
 
-import android.graphics.PorterDuff
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.melaniadev.rickandmorty.R
@@ -29,7 +23,6 @@ class CharacterDetailFragment : Fragment() {
     companion object {
 
         val KEY_CHARACTER = "characterInfo"
-
         fun newInstance(character: CharacterModel): CharacterDetailFragment {
             val characterDetailFragment = CharacterDetailFragment()
             val bundle = Bundle()
@@ -40,9 +33,7 @@ class CharacterDetailFragment : Fragment() {
     }
 
     private lateinit var binding: CharacterDetailFragmentBinding
-    private val homeViewModel: HomeViewModel by viewModels()
     private val character: CharacterModel by lazy { requireArguments().getSerializable(KEY_CHARACTER) as CharacterModel }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,15 +45,22 @@ class CharacterDetailFragment : Fragment() {
         bindViews()
         return mView
     }
-
     private fun bindViews(){
-        binding.characterName.text = character.name
-        binding.characterStatus.text = character.status.toString()
-        binding.characterSpecie.text = character.species
-        binding.characterGender.text = character.gender.toString()
-        binding.characterOrigin.text = character.origin
-        binding.characterLocation.text = character.location
-
+        binding.apply {
+            characterName.text = character.name
+            characterStatus.text = character.status.toString()
+            characterSpecie.text = character.species
+            characterGender.text = character.gender.toString()
+            characterOrigin.text = character.origin
+            characterLocation.text = character.location
+            setImageByGender()
+            setColorByStatus()
+        }
+        val requestOptions = RequestOptions().transform(RoundedCorners(30))
+        Glide.with(binding.root).load(character.image).apply(requestOptions)
+            .into(binding.characterImage)
+    }
+    private fun setImageByGender(){
         val genderType = when (character.gender) {
             Gender.FEMALE -> R.drawable.gender_female_svg
             Gender.MALE -> R.drawable.gender_male_svg
@@ -70,7 +68,8 @@ class CharacterDetailFragment : Fragment() {
             Gender.UNKNOWN -> R.drawable.gender_unknown_svg
         }
         binding.genderView.setImageResource(genderType)
-
+    }
+    private fun setColorByStatus(){
         val statusColor = when (character.status) {
             Status.ALIVE -> R.color.green_alive
             Status.DEAD -> R.color.red_dead
@@ -82,9 +81,5 @@ class CharacterDetailFragment : Fragment() {
             DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(requireContext(), statusColor))
             binding.characterStatus.background = wrappedDrawable
         }
-
-        val requestOptions = RequestOptions().transform(RoundedCorners(30))
-        Glide.with(binding.root).load(character.image).apply(requestOptions)
-            .into(binding.characterImage)
     }
 }

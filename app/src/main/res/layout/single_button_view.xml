@@ -15,7 +15,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:background="@drawable/shape_radius_btn"
-        android:text="Next page"
+        android:text="@string/next_page"
         android:textStyle="bold"
         android:textSize="30sp"
         android:visibility="visible"
