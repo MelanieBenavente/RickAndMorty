@@ -62,7 +62,7 @@
                     android:maxLines="1"
                     android:padding="15dp"
                     android:text="@string/character_name"
-                    android:textAlignment="textStart"
+                    android:textAlignment="center"
                     android:textColor="@color/character_name"
                     android:textSize="30sp"
                     android:textStyle="bold"
