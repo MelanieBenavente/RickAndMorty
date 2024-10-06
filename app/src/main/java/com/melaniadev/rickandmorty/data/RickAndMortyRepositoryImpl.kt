@@ -7,11 +7,9 @@ import com.melaniadev.rickandmorty.domain.model.CharacterInfoWrapper
 import com.melaniadev.rickandmorty.domain.model.CharacterModel
 import com.melaniadev.rickandmorty.domain.model.mapper.CharacterModelMapper
 import com.melaniadev.rickandmorty.domain.repository.RickAndMortyRepository
+import javax.inject.Inject
 
-class RickAndMortyRepositoryImpl : RickAndMortyRepository {
-    val localDataSource = LocalDataSource()
-    val remoteDataSource = RemoteDataSource()
-
+class RickAndMortyRepositoryImpl @Inject constructor(private val localDataSource: LocalDataSource, private val remoteDataSource: RemoteDataSource) : RickAndMortyRepository {
     override suspend fun getCharacterList(): CharacterInfoWrapper {
         try {
             val apiResponseDto = remoteDataSource.getCharacterListFromRemote()
