@@ -11,4 +11,8 @@ class LocalDataSource {
     fun getCharacterList() : List<CharacterModel> {
         return characterListCache
     }
+    fun getCharacterInfo(characterId : Int) : CharacterModel {
+        val filteredList = characterListCache.first {  it.id == characterId }
+        return filteredList
+    }
 }

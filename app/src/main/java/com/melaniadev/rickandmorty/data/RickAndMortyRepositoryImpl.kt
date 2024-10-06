@@ -25,4 +25,16 @@ class RickAndMortyRepositoryImpl : RickAndMortyRepository {
             throw e
         }
     }
+
+    override suspend fun getCharacterInfo(characterId: Int): CharacterModel {
+        try {
+            val localCharacter = localDataSource.getCharacterInfo(characterId)
+            return localCharacter
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw e
+        }
+    }
 }
+
