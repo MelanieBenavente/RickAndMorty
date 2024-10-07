@@ -1,4 +1,4 @@
-package com.melaniadev.rickandmorty.ui.features.character
+package com.melaniadev.rickandmorty.ui.features.character.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

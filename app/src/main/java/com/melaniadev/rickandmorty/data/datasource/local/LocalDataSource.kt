@@ -12,7 +12,7 @@ class LocalDataSource {
         return characterListCache
     }
     fun getCharacterInfo(characterId : Int) : CharacterModel {
-        val filteredList = characterListCache.first {  it.id == characterId }
-        return filteredList
+        val characterFilteredById = characterListCache.first {  it.id == characterId }
+        return characterFilteredById
     }
 }

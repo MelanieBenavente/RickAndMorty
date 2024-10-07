@@ -2,7 +2,6 @@ package com.melaniadev.rickandmorty.data
 
 import com.melaniadev.rickandmorty.data.datasource.local.LocalDataSource
 import com.melaniadev.rickandmorty.data.datasource.remote.RemoteDataSource
-import com.melaniadev.rickandmorty.data.datasource.remote.common.RetrofitUtils
 import com.melaniadev.rickandmorty.domain.model.CharacterInfoWrapper
 import com.melaniadev.rickandmorty.domain.model.CharacterModel
 import com.melaniadev.rickandmorty.domain.model.mapper.CharacterModelMapper
@@ -35,4 +34,3 @@ class RickAndMortyRepositoryImpl @Inject constructor(private val localDataSource
         }
     }
 }
-

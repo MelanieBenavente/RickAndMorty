@@ -3,8 +3,9 @@ package com.melaniadev.rickandmorty.ui.common
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.melaniadev.rickandmorty.ui.features.character.CharacterDetailView
-import com.melaniadev.rickandmorty.ui.features.home.HomeView
+import com.melaniadev.rickandmorty.ui.common.components.ErrorFullScreenView
+import com.melaniadev.rickandmorty.ui.features.character.view.CharacterDetailView
+import com.melaniadev.rickandmorty.ui.features.home.view.HomeView
 
 enum class NavigationRoute {
     HOME, CHARACTER_DETAIL, BLOCK_ERROR

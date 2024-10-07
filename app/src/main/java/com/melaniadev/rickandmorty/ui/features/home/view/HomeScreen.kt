@@ -1,4 +1,4 @@
-package com.melaniadev.rickandmorty.ui.features.home
+package com.melaniadev.rickandmorty.ui.features.home.view
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize

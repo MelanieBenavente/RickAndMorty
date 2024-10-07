@@ -26,5 +26,3 @@ class CharacterDetailViewModel @Inject constructor(
         }
     }
 }
-
-
