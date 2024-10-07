@@ -15,16 +15,16 @@ data class CharacterModel(
     val episodes: List<String>
 ) : Serializable
 
-enum class Status {
-    ALIVE,
-    DEAD,
-    UNKNOWN
+enum class Status(val statusName: String) {
+    ALIVE("ALIVE"),
+    DEAD("DEAD"),
+    UNKNOWN("UNKNOWN")
 }
 
-enum class Gender {
-    FEMALE,
-    MALE,
-    GENDERLESS,
-    UNKNOWN
+enum class Gender(val genderName: String) {
+    FEMALE("FEMALE"),
+    MALE("MALE"),
+    GENDERLESS("GENDERLESS"),
+    UNKNOWN("UNKNOWN")
 }
 

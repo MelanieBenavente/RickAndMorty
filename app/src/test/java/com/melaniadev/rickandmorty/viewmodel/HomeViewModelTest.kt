@@ -3,7 +3,7 @@ package com.melaniadev.rickandmorty.viewmodel
 import app.cash.turbine.test
 import com.melaniadev.rickandmorty.domain.model.CharacterInfoWrapper
 import com.melaniadev.rickandmorty.domain.usecase.GetCharactersUseCase
-import com.melaniadev.rickandmorty.ui.HomeViewModel
+import com.melaniadev.rickandmorty.ui.features.home.viewmodel.HomeViewModel
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +15,6 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Test
-import kotlin.test.assertTrue
 
 class HomeViewModelTest : CommonViewModelTest() {
 
@@ -32,15 +31,26 @@ class HomeViewModelTest : CommonViewModelTest() {
     fun `given getCharactersUseCase() returns flowOf()characterInfoWrapper, when calls requestCharactersFromModel() then State is Loading and CharacterInfoRecived`() {
         //GIVEN
         val characterInfoWrapper = mockk<CharacterInfoWrapper>()
+        every { characterInfoWrapper.characterList } returns listOf(mockk())
         TestScope(StandardTestDispatcher()).runTest {
             every { getCharactersUseCase() } returns flowOf(characterInfoWrapper)
-            //WHEN
             initDispatchers(this.coroutineContext)
-            viewModel.requestCharactersFromModel()
-            //THEN
-            viewModel.state.test {
-                assertTrue(awaitItem() is HomeViewModel.State.Loading)
-                assertTrue(awaitItem() is HomeViewModel.State.CharacterInfoRecived)
+            viewModel.homeUiModelState.test {
+                //WHEN
+                viewModel.requestCharacters()
+                //THEN
+                val state0 = awaitItem()
+                assert(!state0.isLoading)
+                assert(!state0.isError)
+
+                val state1 = awaitItem()
+                assert(state1.isLoading)
+                assert(!state1.isError)
+
+                val state2 = awaitItem()
+                assert(!state2.isLoading)
+                assert(!state2.isError)
+                assert(state2.characterInfoWrapper.characterList.isNotEmpty())
             }
         }
     }
@@ -51,13 +61,20 @@ class HomeViewModelTest : CommonViewModelTest() {
         //GIVEN
         TestScope(StandardTestDispatcher()).runTest {
             every { getCharactersUseCase() } throws Exception("simulated error")
-            //WHEN
             initDispatchers(this.coroutineContext)
-            viewModel.requestCharactersFromModel()
-            //THEN
-            viewModel.state.test {
-                assertTrue(awaitItem() is HomeViewModel.State.Loading)
-                assertTrue(awaitItem() is HomeViewModel.State.ScreenError)
+            viewModel.homeUiModelState.test {
+                //WHEN
+                viewModel.requestCharacters()
+                //THEN
+                val state0 = awaitItem()
+                assert(!state0.isLoading)
+                assert(!state0.isError)
+                val state1 = awaitItem()
+                assert(state1.isLoading)
+                assert(!state1.isError)
+                val state2 = awaitItem()
+                assert(!state2.isLoading)
+                assert(state2.isError)
             }
         }
     }
